@@ -22,3 +22,5 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::resource('tenis', App\Http\Controllers\TenisController::class);
