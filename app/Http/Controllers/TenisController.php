@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenis;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,18 +20,35 @@ class TenisController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return Inertia::render('Tenis/Create');
     }
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param \Illuminate\Html\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $tenis = new Tenis();   
+        $tenis->talla = $request->talla;
+        $tenis->color = $request->color;
+        $tenis->u_disponible = $request->stock;
+        $tenis->modelo = $request->modelo;
+        $tenis->precio = $request->precio;
+        $tenis->marca_idmarca = $request->marca;
+        $tenis->estilo_idestilo = $request->estilo;
+
+        $tenis->slug = Tenis::createSlug($request->modelo);
+
+        $tenis->save();
+
+        return $this->index();
     }
 
     /**
